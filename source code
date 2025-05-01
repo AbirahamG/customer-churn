@@ -1,0 +1,46 @@
+    import pandas as pd
+import numpy as np
+
+
+data = {
+    "Age": [23, 34, 45, 36, 50],
+    "Monthly_Spend": [100, 200, 300, 150, 350],
+    "Contract_Type": [1, 2, 1, 1, 2],  
+    "Support_Calls": [2, 5, 1, 3, 4],
+    "Churn": [0, 1, 0, 0, 1]  
+}
+df = pd.DataFrame(data)
+
+
+X = df.drop("Churn", axis=1).values  
+y = df["Churn"].values 
+
+split_index = int(0.8 * len(df)) 
+X_train, X_test = X[:split_index], X[split_index:]
+y_train, y_test = y[:split_index], y[split_index:]
+
+
+def predict(inputs):
+    predictions = []
+    for row in inputs:
+        if row[1] > 250 and row[3] > 2:  
+            predictions.append(1)  
+        else:
+            predictions.append(0)  
+    return np.array(predictions)
+
+
+y_pred = predict(X_test)
+accuracy = np.sum(y_pred == y_test) / len(y_test)
+
+print("Predictions:", y_pred)
+print("Actual:", y_test)
+print("Accuracy:", accuracy)
+
+
+new_customer = np.array([[30, 300, 1, 3]]) 
+new_prediction = predict(new_customer)
+print("Predicted Churn for New Customer:", new_prediction
+
+
+
